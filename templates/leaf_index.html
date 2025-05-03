@@ -1,0 +1,330 @@
+{% extends "shared/base.html" %}
+
+{% block title %}Apple Leaf Disease Detection - APPLEYSIS{% endblock %}
+
+{% block content %}
+<style>
+    .custom-file-upload {
+        display: flex;
+        align-items: center;
+    }
+
+    .upload-btn {
+        background-color: #007bff;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+        margin-right: 15px;
+    }
+
+    .hidden-input {
+        display: none;
+    }
+
+    .disease-card {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        margin-bottom: 20px;
+    }
+
+    .disease-modal {
+        display: none;
+        position: fixed;
+        z-index: 999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-content {
+        background-color: #fff;
+        margin: 5% auto;
+        padding: 30px;
+        border-radius: 10px;
+        width: 80%;
+        max-width: 700px;
+        position: relative;
+    }
+
+    .close-modal {
+        position: absolute;
+        right: 15px;
+        top: 10px;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .popup-section {
+        margin-bottom: 20px;
+    }
+    
+    .modal-header {
+        padding: 15px;
+        border-bottom: 1px solid #e9ecef;
+        position: relative;
+    }
+    
+    .modal-body {
+        padding: 20px;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="content-card">
+                <h1 class="text-center mb-4">Apple Leaf Disease Detection</h1>
+                <p class="lead text-center mb-4">Upload an image of your Apple Leaf to detect possible diseases.</p>
+
+                <form id="upload-form" action="{{ url_for('predict_leaf') }}" method="post" enctype="multipart/form-data">
+                    <div class="mb-4">
+                        <label for="file" class="form-label fw-bold">Upload an Apple Leaf Image:</label>
+                        <div class="custom-file-upload">
+                            <input type="file" accept="image/*" name="file" id="file" class="hidden-input">
+                            <label for="file" class="upload-btn">
+                                <i class="fas fa-upload"></i> Choose File
+                            </label>
+                            <span id="file-name">No file chosen</span>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success btn-lg px-4" id="detect-btn">
+                            <i class="fas fa-search me-2"></i>Detect Disease
+                        </button>
+                    </div>
+                </form>
+
+                <div class="mt-4 text-center">
+                    <div id="result-container" class="fs-4 fw-bold" style="display: none;"></div>
+                </div>
+
+                <div id="img-preview" class="mt-4 text-center"></div>
+
+                <div class="content-card mt-5">
+                    <h3 class="text-center mb-4">Apple Leaf Diseases Our Model Can Detect</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="disease-card">
+                                <h4><i class="fas fa-virus text-danger me-2"></i>Apple Scab</h4>
+                                <p>Appears as olive-green to brown lesions on leaves. Later becomes darker with velvety appearance.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="disease-card">
+                                <h4><i class="fas fa-virus text-dark me-2"></i>Black Rot</h4>
+                                <p>Leaves develop frog-eye spots with purple margins and brown centers.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="disease-card">
+                                <h4><i class="fas fa-virus text-warning me-2"></i>Cedar Apple Rust</h4>
+                                <p>Shows as bright orange-yellow spots on leaves, sometimes with red borders.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="disease-card">
+                                <h4><i class="fas fa-check-circle text-success me-2"></i>Healthy Leaf</h4>
+                                <p>Normal, disease-free apple leaves with typical green coloration.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Disease Popup Modal -->
+                <div id="diseasePopup" class="disease-modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 id="diseaseName"></h2>
+                            <span class="close-modal">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <div class="popup-section">
+                                <h3>How it affects the plant:</h3>
+                                <p id="diseaseEffects"></p>
+                            </div>
+                            <div class="popup-section">
+                                <h3>Treatment Steps:</h3>
+                                <ul id="treatmentSteps"></ul>
+                            </div>
+                            <div class="popup-section">
+                                <h3>Recommended Medicines:</h3>
+                                <ul id="recommendedMedicines"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // File upload preview
+    document.getElementById("file").addEventListener("change", function () {
+        const fileName = this.files[0] ? this.files[0].name : "No file chosen";
+        document.getElementById("file-name").textContent = fileName;
+
+        const preview = document.getElementById("img-preview");
+        preview.innerHTML = "";
+        if (this.files[0]) {
+            const img = document.createElement("img");
+            img.src = URL.createObjectURL(this.files[0]);
+            img.style.maxWidth = "300px";
+            img.classList.add("img-fluid", "mt-3", "rounded");
+            preview.appendChild(img);
+        }
+    });
+
+    // Disease Information
+    const diseaseInfo = {
+        "Apple Scab": {
+            effects: "Apple scab causes dark, velvety lesions on leaves. These lesions start as olive-green spots that later become darker with a velvety appearance. Severe infections can cause leaf drop, reducing the tree's vigor and future fruit production.",
+            treatments: [
+                "Remove and destroy fallen leaves to reduce the overwintering fungus", 
+                "Apply fungicides preventatively, starting at green tip stage in spring", 
+                "Prune trees properly to improve air circulation", 
+                "Use resistant apple varieties when planting new trees"
+            ],
+            medicines: [
+                "Captan (2.5g/L water) - Apply every 10-14 days",
+                "Mancozeb (2g/L water) - Apply every 7-10 days during wet periods",
+                "Myclobutanil - Follow label instructions for application rate",
+                "Organic options: Sulfur sprays or copper-based fungicides"
+            ]
+        },
+        "Black Rot": {
+            effects: "Black rot affects apple leaves by creating frog-eye leaf spots - circular lesions with purple margins and brown centers. These spots can expand and cause significant leaf damage, and the fungus can spread to fruits.",
+            treatments: [
+                "Prune out dead or cankered wood in late winter", 
+                "Remove mummified fruits from the tree and ground", 
+                "Improve air circulation through proper tree spacing and pruning", 
+                "Apply fungicides during the growing season"
+            ],
+            medicines: [
+                "Captan (2.5g/L water) - Apply every 10-14 days",
+                "Thiophanate-methyl - Apply according to label directions",
+                "Copper hydroxide - Use as directed on product label",
+                "Organic options: Neem oil (5ml/L water) applied weekly"
+            ]
+        },
+        "Cedar Apple Rust": {
+            effects: "Cedar apple rust appears as bright orange-yellow spots on apple leaves, sometimes with red borders. Severely infected leaves may drop prematurely, and repeated infections can weaken the tree over time.",
+            treatments: [
+                "Remove nearby eastern red cedar trees if possible", 
+                "Apply fungicides preventatively, starting at early bloom stage", 
+                "Plant resistant apple varieties", 
+                "Improve air circulation through proper pruning"
+            ],
+            medicines: [
+                "Myclobutanil - Most effective fungicide for cedar apple rust",
+                "Propiconazole - Follow label instructions for application rate",
+                "Fenarimol - Apply as directed on product label",
+                "Organic options: Potassium bicarbonate sprays"
+            ]
+        },
+        "Healthy": {
+            effects: "This apple leaf appears healthy with no visible signs of disease. Healthy apple leaves have uniform green coloration, smooth texture, and no spots or lesions.",
+            treatments: [
+                "Continue regular maintenance and preventative care", 
+                "Monitor for early signs of disease or pest issues", 
+                "Maintain proper watering schedule - avoid overhead watering", 
+                "Ensure adequate nutrition through proper fertilization"
+            ],
+            medicines: [
+                "Preventative fungicide applications according to local disease forecasting",
+                "Dormant oil spray before bud break to control overwintering pests",
+                "Balanced fertilizer application based on soil test results",
+                "Regular beneficial microbe applications to strengthen plant immunity"
+            ]
+        }
+    };
+
+    // Form submission with automatic popup trigger
+    document.getElementById("upload-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const result = document.getElementById("result-container");
+        
+        result.style.display = "block";
+        result.textContent = "Detecting disease... (Please wait)";
+        
+        fetch(this.action, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(html => {
+            result.innerHTML = html;
+            
+            // Extract disease name from response
+            let diseaseName = "Unknown";
+            const match = html.match(/Detected:\s*<b>([^<]+)<\/b>/i);
+            if (match && match[1]) {
+                diseaseName = match[1].trim();
+                // Automatically open the disease popup
+                showDiseasePopup(diseaseName);
+            }
+        })
+        .catch(error => {
+            result.innerHTML = '<span class="text-danger">Error processing your request</span>';
+            console.error('Error:', error);
+        });
+    });
+
+    // Function to show disease popup
+    window.showDiseasePopup = function(disease) {
+        const popup = document.getElementById("diseasePopup");
+        const name = document.getElementById("diseaseName");
+        const effects = document.getElementById("diseaseEffects");
+        const steps = document.getElementById("treatmentSteps");
+        const meds = document.getElementById("recommendedMedicines");
+
+        if (diseaseInfo[disease]) {
+            name.textContent = disease;
+            effects.textContent = diseaseInfo[disease].effects;
+
+            steps.innerHTML = "";
+            diseaseInfo[disease].treatments.forEach(step => {
+                const li = document.createElement("li");
+                li.textContent = step;
+                steps.appendChild(li);
+            });
+
+            meds.innerHTML = "";
+            diseaseInfo[disease].medicines.forEach(med => {
+                const li = document.createElement("li");
+                li.textContent = med;
+                meds.appendChild(li);
+            });
+
+            popup.style.display = "block";
+        } else {
+            console.error('Disease information not found for:', disease);
+        }
+    }
+
+    // Close popup when clicked outside or on close button
+    document.querySelector(".close-modal").onclick = function() {
+        document.getElementById("diseasePopup").style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target === document.getElementById("diseasePopup")) {
+            document.getElementById("diseasePopup").style.display = "none";
+        }
+    }
+});
+</script>
+{% endblock %}

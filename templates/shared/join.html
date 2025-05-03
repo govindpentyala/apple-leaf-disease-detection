@@ -1,0 +1,380 @@
+{% extends "shared/base.html" %}
+
+{% block title %}Join Us - APPLEYSIS{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --primary: #27ae60;
+        --secondary: #2c3e50;
+        --accent: #e74c3c;
+        --light: #ecf0f1;
+        --dark: #34495e;
+    }
+    
+    .join-container {
+        max-width: 1200px;
+        margin: 3rem auto;
+        padding: 0 2rem;
+    }
+    
+    .join-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    
+    .join-header h1 {
+        font-size: 2.5rem;
+        color: var(--secondary);
+        margin-bottom: 0.5rem;
+    }
+    
+    .join-header p {
+        color: #7f8c8d;
+        font-size: 1.1rem;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+    
+    .join-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+    
+    .join-form {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--secondary);
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-family: inherit;
+        transition: border 0.3s;
+    }
+    
+    .form-group textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+    }
+    
+    .submit-btn {
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 5px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        width: 100%;
+    }
+    
+    .submit-btn:hover {
+        background-color: #219653;
+    }
+    
+    .benefits {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    .benefits h2 {
+        color: var(--secondary);
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+    
+    .benefit-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .benefit-icon {
+        background-color: rgba(39, 174, 96, 0.1);
+        color: var(--primary);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    
+    .benefit-text h3 {
+        color: var(--secondary);
+        margin: 0 0 0.5rem 0;
+    }
+    
+    .benefit-text p {
+        color: #7f8c8d;
+        margin: 0;
+    }
+    
+    .membership-types {
+        grid-column: 1 / -1;
+        margin-top: 2rem;
+    }
+    
+    .membership-types h2 {
+        text-align: center;
+        color: var(--secondary);
+        margin-bottom: 2rem;
+    }
+    
+    .membership-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .membership-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        text-align: center;
+        transition: transform 0.3s;
+    }
+    
+    .membership-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .membership-card h3 {
+        color: var(--secondary);
+        margin-bottom: 1rem;
+    }
+    
+    .price {
+        font-size: 2rem;
+        color: var(--primary);
+        margin: 1rem 0;
+        font-weight: bold;
+    }
+    
+    .price span {
+        font-size: 1rem;
+        color: #7f8c8d;
+    }
+    
+    .membership-features {
+        list-style: none;
+        padding: 0;
+        margin: 1.5rem 0;
+    }
+    
+    .membership-features li {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #eee;
+        color: #7f8c8d;
+    }
+    
+    .membership-features li:last-child {
+        border-bottom: none;
+    }
+    
+    .membership-btn {
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 5px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        width: 100%;
+    }
+    
+    .membership-btn:hover {
+        background-color: #219653;
+    }
+    
+    @media (max-width: 768px) {
+        .join-content {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="join-container">
+    <div class="join-header">
+        <h1>Join the APPLEYSIS Community</h1>
+        <p>Become part of our growing network of apple growers, researchers, and enthusiasts. Gain access to exclusive resources, tools, and a community passionate about apple disease management.</p>
+    </div>
+    
+    <div class="join-content">
+        <form class="join-form" method="POST" action="#">
+            <h2>Sign Up Today</h2>
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="John Appleseed" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="john@example.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="role">I am a...</label>
+                <select id="role" name="role" required>
+                    <option value="">Select your role</option>
+                    <option value="farmer">Apple Farmer/Grower</option>
+                    <option value="researcher">Agricultural Researcher</option>
+                    <option value="student">Student</option>
+                    <option value="enthusiast">Gardening Enthusiast</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="interest">Primary Interest</label>
+                <select id="interest" name="interest" required>
+                    <option value="">Select your interest</option>
+                    <option value="disease">Disease Identification</option>
+                    <option value="treatment">Treatment Options</option>
+                    <option value="prevention">Prevention Methods</option>
+                    <option value="research">Research Collaboration</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="message">Why do you want to join? (Optional)</label>
+                <textarea id="message" name="message" placeholder="Tell us about your interest in apple disease management..."></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">Join Now</button>
+        </form>
+        
+        <div class="benefits">
+            <h2>Membership Benefits</h2>
+            
+            <div class="benefit-item">
+                <div class="benefit-icon">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <div class="benefit-text">
+                    <h3>Exclusive Resources</h3>
+                    <p>Access to our full library of research papers, case studies, and treatment guides.</p>
+                </div>
+            </div>
+            
+            <div class="benefit-item">
+                <div class="benefit-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="benefit-text">
+                    <h3>Community Forum</h3>
+                    <p>Connect with other members to share experiences and solutions.</p>
+                </div>
+            </div>
+            
+            <div class="benefit-item">
+                <div class="benefit-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="benefit-text">
+                    <h3>Advanced Tools</h3>
+                    <p>Get premium access to our disease detection and analysis tools.</p>
+                </div>
+            </div>
+            
+            <div class="benefit-item">
+                <div class="benefit-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="benefit-text">
+                    <h3>Regular Updates</h3>
+                    <p>Monthly newsletter with the latest research and field reports.</p>
+                </div>
+            </div>
+            
+            <div class="benefit-item">
+                <div class="benefit-icon">
+                    <i class="fas fa-video"></i>
+                </div>
+                <div class="benefit-text">
+                    <h3>Webinars & Events</h3>
+                    <p>Invitations to exclusive online events with industry experts.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="membership-types">
+        <h2>Choose Your Membership</h2>
+        <div class="membership-cards">
+            <div class="membership-card">
+                <h3>Basic</h3>
+                <div class="price">Free<span>/forever</span></div>
+                <ul class="membership-features">
+                    <li>Access to basic resources</li>
+                    <li>Community forum</li>
+                    <li>Monthly newsletter</li>
+                    <li>Limited tool access</li>
+                </ul>
+                <button class="membership-btn">Join Free</button>
+            </div>
+            
+            <div class="membership-card" style="border: 2px solid var(--primary);">
+                <h3>Premium</h3>
+                <div class="price">$9<span>/month</span></div>
+                <ul class="membership-features">
+                    <li>All Basic features</li>
+                    <li>Full research library</li>
+                    <li>Advanced tools</li>
+                    <li>Webinar invitations</li>
+                    <li>Priority support</li>
+                </ul>
+                <button class="membership-btn">Get Premium</button>
+            </div>
+            
+            <div class="membership-card">
+                <h3>Professional</h3>
+                <div class="price">$75<span>/year</span></div>
+                <ul class="membership-features">
+                    <li>All Premium features</li>
+                    <li>Annual savings (30%)</li>
+                    <li>Exclusive research papers</li>
+                    <li>1-on-1 consultations</li>
+                    <li>Early feature access</li>
+                </ul>
+                <button class="membership-btn">Go Professional</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

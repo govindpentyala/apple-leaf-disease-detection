@@ -1,0 +1,328 @@
+{% extends "shared/base.html" %}
+
+{% block title %}Videos - APPLEYSIS{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Additional styles for video page */
+    .video-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 100%;
+    }
+    
+    .video-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    .video-info {
+        background-color: #f8f8f8;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        padding: 20px;
+    }
+    
+    .video-content {
+        padding: 15px;
+    }
+    
+    .video-section {
+        padding: 30px 0;
+    }
+    
+    .section-divider {
+        border-top: 1px solid #e0e0e0;
+        margin: 40px 0;
+    }
+    
+    .embed-responsive {
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    }
+    
+    .embed-responsive iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .video-page-title {
+        text-align: center;
+        margin-bottom: 40px;
+        color: #2c3e50;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <!-- Section 1: Apple Scab Videos -->
+    <section class="video-section">
+        <div class="container">
+            <h1 class="video-page-title">Educational Videos</h1>
+            
+            <div class="video-info">
+                <h3>Understanding Apple Scab</h3>
+                <p>Learn about the causes, symptoms, and treatment of apple scab disease, one of the most common apple tree diseases.</p>
+            </div>
+            
+            <div class="row">
+                <!-- Video 1 -->
+                <div class="col-md-3 mb-4">
+                    <div class="video-card">
+                        <div class="embed-responsive">
+                            <iframe src="https://www.youtube.com/embed/u0H2Bwe6UdE?si=EEpgnVsMGyQ5DspN" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-content">
+                            <h5>Identifying Apple Scab</h5>
+                            <p>Learn how to identify early signs of apple scab infection on leaves and fruit.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video 2 -->
+                <div class="col-md-3 mb-4">
+                    <div class="video-card">
+                        <div class="embed-responsive">
+                            <iframe src="https://www.youtube.com/embed/dYbPObiM-QE?si=DHrBQ9zh4TPL1G4f" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-content">
+                            <h5>Explanation of Disease</h5>
+                            <p>Detailed explanation of apple scab disease, its life cycle, and impact on apple production.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video 3 -->
+                <div class="col-md-3 mb-4">
+                    <div class="video-card">
+                        <div class="embed-responsive">
+                            <iframe src="https://www.youtube.com/embed/cR4HBacjEE0" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-content">
+                            <h5>Management of Apple Scab</h5>
+                            <p>Comprehensive strategies for managing and preventing apple scab in your orchard.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video 4 -->
+                <div class="col-md-3 mb-4">
+                    <div class="video-card">
+                        <div class="embed-responsive">
+                            <iframe src="https://www.youtube.com/embed/B5fRX9k9vY8?si=xKimTdHVga_X--jU" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-content">
+                            <h5>Treatment for Apple Scab</h5>
+                            <p>Effective treatment options for controlling apple scab infections in orchards.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="section-divider"></div>
+    
+    <!-- Section 2: Apple Rot Videos -->
+    <section class="video-section">
+        <div class="container">
+            <div class="video-info">
+                <h3>Combating Apple Rot</h3>
+                <p>Educational videos on preventing and treating various types of apple rot that affect stored and growing fruit.</p>
+            </div>
+            
+            <div class="row">
+                <!-- Video 1 -->
+                <div class="col-md-3 mb-4">
+                    <div class="video-card">
+                        <div class="embed-responsive">
+                            <iframe src="https://www.youtube.com/embed/Tdi7uZXqxV0?si=w4zELKz0AgbSb4zK" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-content">
+                            <h5>Identifying Apple Rot</h5>
+                            <p>How to recognize the symptoms of different apple rot diseases in your orchard.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video 2 -->
+                <div class="col-md-3 mb-4">
+                    <div class="video-card">
+                        <div class="embed-responsive">
+                            <iframe src="https://www.youtube.com/embed/gx9djt7AHzE?si=waBM4j9H9ePzK8wY" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-content">
+                            <h5>Types of Apple Rot</h5>
+                            <p>An overview of different rot diseases that affect apples during growth and storage.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video 3 -->
+                <div class="col-md-3 mb-4">
+                    <div class="video-card">
+                        <div class="embed-responsive">
+                            <iframe src="https://www.youtube.com/embed/ZimkfcWq0no?si=bdXQzN8crwdyCtjt" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-content">
+                            <h5>Explanation of Apple Rot</h5>
+                            <p>Detailed scientific explanation of apple rot diseases and their development.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video 4 -->
+                <div class="col-md-3 mb-4">
+                    <div class="video-card">
+                        <div class="embed-responsive">
+                            <iframe src="https://www.youtube.com/embed/xJ1HUZyV7z4?si=tuH6Y953T20fmjmY" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-content">
+                            <h5>Management of Apple Rot</h5>
+                            <p>Effective strategies for managing and preventing apple rot in commercial and home orchards.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="section-divider"></div>
+    
+    <!-- Section 3: Apple Blotch Videos -->
+    <section class="video-section">
+        <div class="container">
+            <div class="video-info">
+                <h3>Apple Blotch Management</h3>
+                <p>Comprehensive guides to managing apple blotch, a bacterial disease that affects apple trees worldwide.</p>
+            </div>
+            
+            <div class="row">
+                <!-- Video 1 -->
+                <div class="col-md-3 mb-4">
+                    <div class="video-card">
+                        <div class="embed-responsive">
+                            <iframe src="https://www.youtube.com/embed/f5RRnJsqaC0?si=5Sw_xIlh5h1rw31f" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-content">
+                            <h5>Sooty Blotch Apple</h5>
+                            <p>Understanding sooty blotch disease, its symptoms and impact on apple quality.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video 2 -->
+                <div class="col-md-3 mb-4">
+                    <div class="video-card">
+                        <div class="embed-responsive">
+                            <iframe src="https://www.youtube.com/embed/cyUoXD242y8?si=ztDZQiY_XQ873Mkv" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-content">
+                            <h5>Marssonina Blotch & Alternaria Leaf Spot in Apple</h5>
+                            <p>Identifying and distinguishing between different leaf blotch diseases in apple trees.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video 3 -->
+                <div class="col-md-3 mb-4">
+                    <div class="video-card">
+                        <div class="embed-responsive">
+                            <iframe src="https://www.youtube.com/embed/wkaGBedbiU0?si=YnYE6PCfCYGwRT5N" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-content">
+                            <h5>Marssonina Leaf and Fruit Blotch: Biology and Management</h5>
+                            <p>Scientific insights into Marssonina blotch disease and effective management strategies.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video 4 -->
+                <div class="col-md-3 mb-4">
+                    <div class="video-card">
+                        <div class="embed-responsive">
+                            <iframe src="https://www.youtube.com/embed/kU_BTIVB_Ug?si=Gn4zJRx3nQJyfEeg" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-content">
+                            <h5>Necrotic Leaf Blotch of Apples</h5>
+                            <p>Understanding the causes, symptoms and management of necrotic leaf blotch in apple trees.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Section 4: Apple rust Videos -->
+    <section class="video-section">
+        <div class="container">
+            <div class="video-info">
+                <h3>Cedar Apple Rust</h3>
+                <p>Comprehensive guides to managing apple Rust, a bacterial disease that affects apple trees worldwide.</p>
+            </div>
+            
+            <div class="row">
+                <!-- Video 1 -->
+                <div class="col-md-3 mb-4">
+                    <div class="video-card">
+                        <div class="embed-responsive">
+                            <iframe src="https://www.youtube.com/embed/iiOsKkcObSA?si=88KOMfcNe7CbQT2n" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-content">
+                            <h5>Symptoms and Identification of Cedar Apple Rust</h5>
+                            <p>Comprehensive guide to recognizing and understanding the visual symptoms of cedar apple rust on apple trees.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video 2 -->
+                <div class="col-md-3 mb-4">
+                    <div class="video-card">
+                        <div class="embed-responsive">
+                            <iframe src="https://www.youtube.com/embed/ynCBHri2zDk?si=lHgqV31izzEy7QPd" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-content">
+                            <h5>Life Cycle and Transmission of Cedar Apple Rust</h5>
+                            <p>In-depth exploration of the biological mechanisms, transmission pathways, and environmental factors of cedar apple rust disease.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video 3 -->
+                <div class="col-md-3 mb-4">
+                    <div class="video-card">
+                        <div class="embed-responsive">
+                            <iframe src="https://www.youtube.com/embed/K9M8CkaIQho?si=qM4neA7hhk3cPfFc" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-content">
+                            <h5>Treatment and Prevention Strategies</h5>
+                            <p>Practical techniques and scientific approaches for preventing, controlling, and minimizing the impact of cedar apple rust in orchards.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video 4 -->
+                <div class="col-md-3 mb-4">
+                    <div class="video-card">
+                        <div class="embed-responsive">
+                            <iframe src="https://www.youtube.com/embed/biC_uGfrybo?si=bZzSFzoXEJS7VkMv" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-content">
+                            <h5>Integrated Pest Management for Cedar Apple Rust</h5>
+                            <p>Comprehensive overview of holistic management techniques, including cultural, biological, and chemical control methods for cedar apple rust.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

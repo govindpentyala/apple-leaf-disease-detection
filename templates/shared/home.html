@@ -1,0 +1,133 @@
+{% extends "shared/base.html" %}
+
+{% block title %}Apple Disease Detection & Management{% endblock %}
+
+
+{% block content %}
+<style>
+    .slider {
+        width: 100%;
+        max-width: 800px;
+        margin: 40px auto;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .slides img {
+        width: 100%;
+        display: none;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    .slides img:first-child {
+        display: block;
+    }
+</style>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Apple Disease Detection & Management</h1>
+            <p>Your comprehensive solution for identifying and managing apple leaf and fruit diseases with AI-powered technology.</p>
+            <div class="hero-buttons">
+                <a href="{{ url_for('apple') }}" class="btn primary-btn">GET STARTED</a>
+                <a href="#features" class="btn secondary-btn">LEARN MORE</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="feature-box">
+                <div class="feature">
+                    <i class="fas fa-apple-alt"></i>
+                    <h3>Apple Diseases</h3>
+                    <p>Explore common apple fruit diseases, symptoms, and treatment options.</p>
+                    <a href="{{ url_for('apple') }}" class="feature-btn">Check Apple</a>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Leaf Diseases</h3>
+                    <p>Learn about various leaf diseases affecting apple trees and how to identify them.</p>
+                    <a href="{{ url_for('leaf') }}" class="feature-btn">Check Leaf</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Compact Image Slider -->
+    <div class="slider">
+        <div class="slides" id="slides">
+            <img src="{{ url_for('static', filename='images/slider1.png') }}" alt="Apple Scab">
+            <img src="{{ url_for('static', filename='images/slider2.png') }}" alt="Black Rot">
+            <img src="{{ url_for('static', filename='images/slider3.png') }}" alt="Cedar Apple Rust">
+        </div>
+    </div>
+
+    <!-- Blog Section -->
+    <section class="blog">
+        <h2>Apple Leaf & Fruit Diseases</h2>
+        <div class="blog-grid">
+            <div class="blog-post">
+                <h3>Apple Scab</h3>
+                <p>Apple Scab is caused by the fungus Venturia inaequalis, affecting leaves and fruit with olive-green to black spots.</p>
+                <a href="https://extension.umn.edu/plant-diseases/apple-scab" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="blog-post">
+                <h3>Flyspeck & Sooty Blotch</h3>
+                <p>Fungal complexes that cause cosmetic damage to fruit surfaces.</p>
+                <a href="https://extension.umn.edu/plant-diseases/flyspeck-and-sooty-blotch-apple" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="blog-post">
+                <h3>Black Rot</h3>
+                <p>A fungal disease causing circular brown lesions with concentric rings.</p>
+                <a href="https://extension.umn.edu/plant-diseases/black-rot-apple" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="blog-post">
+                <h3>Cedar Apple Rust</h3>
+                <p>Bright orange spots on leaves and fruit caused by a fungus.</p>
+                <a href="https://extension.umn.edu/plant-diseases/cedar-apple-rust" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta">
+        <h2>Join Us Today!</h2>
+        <p>Be part of our community and stay updated on apple disease management.</p>
+        <a href="{{ url_for('join') }}" class="btn">Join Now</a>
+    </section>
+
+    <!-- Go Up Button -->
+    <a href="#" id="go-up-btn" class="go-up-btn">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+{% endblock %}
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const slidesContainer = document.getElementById('slides');
+        const slides = slidesContainer.getElementsByTagName('img');
+        let currentIndex = 0;
+        const totalSlides = slides.length;
+        const intervalTime = 3000; // 3 seconds
+
+        function showSlide(index) {
+            for (let i = 0; i < totalSlides; i++) {
+                slides[i].style.display = i === index ? 'block' : 'none';
+            }
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            showSlide(currentIndex);
+        }
+
+        // Initialize
+        showSlide(currentIndex);
+        setInterval(nextSlide, intervalTime);
+    });
+</script>
+{% endblock %}
